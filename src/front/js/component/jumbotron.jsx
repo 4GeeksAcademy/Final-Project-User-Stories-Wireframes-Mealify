@@ -28,7 +28,7 @@ export const Jumbotron = () => {
                     with AI-powered suggestions from ChatGPT. Start planning today!</p>
 
                 <button href="#" onClick={handleClick} className="button button--medium" aria-label="Descubre más sobre nuestros destinos">
-                    Discover
+                    Get Started
                     <img src="https://res.cloudinary.com/dfhhq651o/image/upload/v1737893117/arrow-down-white-icon_uuodhm.svg" alt="arrow down" className="banner__icon" />
                 </button>
             </div>

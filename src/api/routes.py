@@ -344,6 +344,11 @@ def delete_user(user_id):
         if not user:
             return jsonify({"msg": "User not found"}), 404
 
+        # Eliminar el perfil asociado al usuario
+        perfil = Perfil.query.filter_by(user_id=user_id).first()
+        if perfil:
+            db.session.delete(perfil)
+            
         # Eliminar el usuario
         db.session.delete(user)
         db.session.commit()

@@ -11,15 +11,21 @@ export const SecondaryJumbotron = () => {
         actions.getUserInfo();
     }, []);
 
-    // Determina el contenido en función de la ruta actual
-    const isProfile = location.pathname === "/profile";
-    const title = isProfile
-        ? `Welcome Back, ${store.user?.user || "Guest"}! Let’s Craft Your Perfect Plate.`
-        : `${store.user?.user} Your Culinary Creations Await!`;
-    const description = isProfile
-        ? "Personalize your profile, fine-tune your goals, and celebrate every milestone on your journey."
-        : "Explore your saved menus, refine your recipes, and savor the journey of delicious possibilities.";
+       // Determina el contenido en función de la ruta actual
+       const isProfile = location.pathname === "/profile";
+       const isMenuCreator = location.pathname === "/menucreator";
 
+       const title = isProfile
+           ? `Welcome Back, ${store.user?.user || "Guest"}! Let’s Craft Your Perfect Plate.`
+           : isMenuCreator
+           ? "Create Your Personalized Menu"
+           : `Your Culinary Creations Await ${store.user?.user} !`;
+       const description = isProfile
+           ? "Personalize your profile, fine-tune your goals, and celebrate every milestone on your journey."
+           : isMenuCreator
+           ? `Hi, ${store.user?.user}! Let AI craft the perfect meal plan for you. Simply share your preferences, and we’ll handle the rest.`
+           : "Explore your saved menus, refine your recipes, and savor the journey of delicious possibilities.";
+   
     return (
         <section className="banner__secondary" aria-labelledby="banner__title">
             <div className="banner__image-container">

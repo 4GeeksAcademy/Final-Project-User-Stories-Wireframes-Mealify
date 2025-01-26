@@ -1,0 +1,43 @@
+.why-choose {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #f7f7f7;
+  }
+  
+  .why-choose h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .benefits {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  
+  .benefit {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 250px;
+    text-align: left;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .benefit img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px;
+  }
+  
+  .benefit h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .benefit p {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  

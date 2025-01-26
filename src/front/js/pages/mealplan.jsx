@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../store/appContext";
-import { SecondaryJumbotron } from "./secondaryJumbotron.jsx";
+import { Context } from "../store/appContext.js";
+import { SecondaryJumbotron } from "../component/secondaryJumbotron.jsx";
 
 export const MealPlan = () => {
     const navigate = useNavigate();

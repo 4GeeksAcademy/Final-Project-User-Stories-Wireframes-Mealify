@@ -430,10 +430,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error retrieving the menu:", error.message);
 					alert("Could not retrieve the weekly menu. Please try again later.");
 				}
-			}
-		
-
-
+			},
+			
+			deleteUser: async (id) => {
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/user/${id}`, {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    });
+            
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        return { success: false, message: errorData.error || "Failed to delete user." };
+                    }
+            
+                    const data = await response.json();
+                    return { success: true, message: data.msg };
+                } catch (error) {
+                    return { success: false, message: "An error occurred. Please try again later." };
+                }
+            },
 		}
 	};
 };
