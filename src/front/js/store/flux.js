@@ -229,6 +229,79 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			getPlans: async (userId) => {
+				try {
+					// Construimos la URL del endpoint
+					const url = `${process.env.BACKEND_URL}api/plans/${userId}`;
+					
+					// Realizamos la solicitud GET al backend
+					const response = await fetch(url, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json"
+						}
+					});
+			
+					// Validamos la respuesta
+					if (!response.ok) {
+						const errorData = await response.json();
+						console.error("Error al obtener los planes:", errorData);
+						return { error: errorData.message || "Error desconocido" };
+					}
+			
+					// Parseamos el cuerpo de la respuesta como JSON
+					const data = await response.json();
+					
+					// Opcional: guarda el perfil en el store si necesitas usarlo en otros lugares
+					const store = getStore();
+					setStore({ ...store, userPlans: data });
+			
+					// Devuelve los datos obtenidos
+					return data;
+			
+				} catch (error) {
+					console.error("Error de conexión con el backend:", error);
+					return { error: "Error de conexión con el servidor" };
+				}
+			},
+
+			deletePlans: async (planId) => {
+				try {
+					const token = localStorage.getItem("token"); // Obtén el token si es necesario
+					if (!token) {
+						console.error("No token found. User might not be logged in.");
+						return;
+					}
+			
+					const response = await fetch(`${process.env.BACKEND_URL}/api/plan/${planId}`, {
+						method: "DELETE",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${token}` // Si tu API requiere un token de autorización
+						}
+					});
+			
+					if (!response.ok) {
+						const errorData = await response.json();
+						console.error("Error eliminando el plan:", errorData.msg || "Unknown error");
+						return false;
+					}
+			
+					const data = await response.json();
+					console.log("Plan eliminado correctamente:", data.msg);
+			
+					// Opcional: actualiza el estado global de planes en el store
+					const store = getStore();
+					const updatedPlans = store.userPlans.data.filter(plan => plan.id !== planId);
+					setStore({ ...store, userPlans: { ...store.userPlans, data: updatedPlans } });
+			
+					return true; // Retorna true si la eliminación fue exitosa
+				} catch (error) {
+					console.error("Unexpected error while deleting the plan:", error);
+					return false;
+				}
+			},
+
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");

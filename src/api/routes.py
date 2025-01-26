@@ -456,6 +456,23 @@ def get_all_plans():
     except Exception as e:
         return jsonify({"msg": "Unexpected error", "error": str(e)}), 500
 
+@api.route('/plans/<int:user_id>', methods=['GET'])
+def get_plans_by_user(user_id):
+    try:
+        # Consulta para obtener todos los registros con el user_id proporcionado
+        plans = My_Plans.query.filter_by(user_id=user_id).all()
+
+        # Serializar los resultados
+        serialized_plans = [plan.serialize() for plan in plans]
+
+        # Responder con los planes o un mensaje si no hay resultados
+        if serialized_plans:
+            return jsonify({"status": "success", "data": serialized_plans}), 200
+        else:
+            return jsonify({"status": "success", "message": "No plans found for this user_id"}), 404
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
 
 # Endpoint para obtener un plan por ID
 @api.route('/plan/<int:plan_id>', methods=['GET'])
